@@ -71,7 +71,7 @@ jobs:
           run-id: ${{ github.event.client_payload.run_id }}
 
       - name: Veracode Upload and Scan Action Step
-        uses: veracode/uploadandscan-action@v0.1.4
+        uses: veracode/uploadandscan-action@v0.1.5
         id: upload_and_scan
         with:
           vid: '${{ secrets.VERACODE_API_ID }}'
@@ -84,7 +84,6 @@ jobs:
           policy: ${{ github.event.client_payload.policy_name }}
           scantimeout: 15
           failbuild: ${{ github.event.client_payload.user_config.break_build_policy_findings }}
-          use_upgraded_version: true
 
       - name: Veracode Policy Results
         id: prepare-results
