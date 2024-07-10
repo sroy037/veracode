@@ -1,11 +1,4 @@
-veracode_static_scan:
-  on:
-    schedule:
-      #Run scheduled scan for Maintenance repo
-      - cron: '0 5 10 * *'
-    branches_to_run:
-      - 'main'
-    branches_to_exclude:    
+veracode_static_scan:  
   push:
     trigger: true
     # Please only specify either branches_to_run or branches_to_exclude
