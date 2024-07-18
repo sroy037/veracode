@@ -52,6 +52,10 @@ on:
         required: true
         type: string
 
+env:
+    repo_name: ${{ inputs.profile_name }}
+    app_name: ${{ repo_name.split('\') }}
+
 jobs:
   policy_scan:
     runs-on: ubuntu-latest
@@ -71,9 +75,7 @@ jobs:
       # fetch the repo name excluding Org prefix
       - name: fetch app name
         run: |
-             echo ${{ inputs.profile_name }}
-             repo_name=${{ inputs.profile_name }}
-             app_name=`cut -d\ -f2 repo_name`
+             echo ${{ app_name }}
 
       # run the policy scan action
       - name: Veracode Upload and Scan Action Step
