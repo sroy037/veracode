@@ -82,7 +82,7 @@ jobs:
           vkey: '${{ secrets.VERACODE_API_KEY }}'
           #scanpollinginterval: 30
           scantimeout: 15
-          deleteincompletescan: 2
+          deleteincompletescan: true
           # include: ${{ inputs.modules_to_scan }}
           failbuild: ${{ inputs.break_build_policy_findings }}
 
