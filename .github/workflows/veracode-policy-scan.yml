@@ -51,7 +51,9 @@ on:
       language:
         required: true
         type: string
-
+env:
+    app: ''
+    
 jobs:
   policy_scan:
     runs-on: ubuntu-latest
@@ -71,14 +73,14 @@ jobs:
       # fetch the repo name excluding Org prefix
       - name: fetch app name
         run: |
-             echo ${{ inputs.profile_name.split('\')[1] }}
+             app=${{ inputs.profile_name.split('\')[1] }}
 
       # run the policy scan action
       - name: Veracode Upload and Scan Action Step
         uses: veracode/uploadandscan-action@v0.1.5
         id: upload_and_scan
         with:
-          appname: ${{ inputs.profile_name.split('\')[1] }}
+          appname: '${{ app }}'
           createprofile: true
           policy: ${{ inputs.policy_name }}
           version: '${{ github.run_id }}'
