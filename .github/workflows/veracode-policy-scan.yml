@@ -78,7 +78,7 @@ jobs:
         uses: veracode/uploadandscan-action@v0.1.5
         id: upload_and_scan
         with:
-          appname: '${{ app }}'
+          appname: '${{ inputs.profile_name }}'
           createprofile: true
           policy: ${{ inputs.policy_name }}
           version: '${{ github.run_id }}'
