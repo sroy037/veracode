@@ -39,5 +39,5 @@ jobs:
           action: 'removeSandbox'
           vid: ${{ secrets.VERACODE_API_ID }}
           vkey: ${{ secrets.VERACODE_API_KEY }}
-          appname: ${{ github.event.repository.name }}
+          appname: ${{ github.event.client_payload.repository.name }}
           sandboxname: GitHub App Scans-${{ github.event.client_payload.repository.branch }}
