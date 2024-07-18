@@ -73,7 +73,7 @@ jobs:
       # fetch the repo name excluding Org prefix
       - name: fetch app name
         run: |
-             app=${{ inputs.profile_name.split('\')[1] }}
+             app=(${{ inputs.profile_name }}.split('\'))[1]
 
       # run the policy scan action
       - name: Veracode Upload and Scan Action Step
