@@ -52,10 +52,6 @@ on:
         required: true
         type: string
 
-env:
-    repo_name: ${{ inputs.profile_name }}
-    app_name: ${{ repo_name.split('\') }}
-
 jobs:
   policy_scan:
     runs-on: ubuntu-latest
@@ -82,7 +78,7 @@ jobs:
         uses: veracode/uploadandscan-action@v0.1.5
         id: upload_and_scan
         with:
-          appname: '${{ app_name }}'
+          appname: ${{ inputs.profile_name.split('\')[1] }}
           createprofile: true
           policy: ${{ inputs.policy_name }}
           version: '${{ github.run_id }}'
