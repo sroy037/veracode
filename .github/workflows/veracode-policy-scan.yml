@@ -52,9 +52,6 @@ on:
         required: true
         type: string
 
-env:
-    app_name: ''
-
 jobs:
   policy_scan:
     runs-on: ubuntu-latest
@@ -81,7 +78,7 @@ jobs:
         uses: veracode/uploadandscan-action@v0.1.5
         id: upload_and_scan
         with:
-          appname: '${{ app_name }}'
+          appname: ${{ github.event.client_payload.repository.name }}
           createprofile: true
           policy: ${{ inputs.policy_name }}
           version: '${{ github.run_id }}'
@@ -103,7 +100,7 @@ jobs:
           check_run_id: ${{ inputs.check_run_id }}
           vid: ${{ secrets.VERACODE_API_ID }}
           vkey: ${{ secrets.VERACODE_API_KEY }}
-          appname: ${{ inputs.profile_name }}
+          appname: ${{ github.event.client_payload.repository.name }}
           source_repository: ${{ inputs.source_repository }}
           fail_checks_on_policy: ${{ inputs.break_build_policy_findings }}
           fail_checks_on_error: ${{ inputs.break_build_on_error }}
@@ -120,7 +117,7 @@ jobs:
           action: 'removeSandbox'
           vid: ${{ secrets.VERACODE_API_ID }}
           vkey: ${{ secrets.VERACODE_API_KEY }}
-          appname: ${{ inputs.profile_name }}
+          appname: ${{ github.event.client_payload.repository.name }}
           sandboxname: GitHub App Scans-${{ github.event.client_payload.user_config.sandbox_scan.branch }}
 
   code-scanning-alert:
