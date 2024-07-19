@@ -87,6 +87,7 @@ jobs:
           failbuild: ${{ inputs.break_build_policy_findings }}
 
       - name: Find app_id for the application
+        if: always()
         env:
           VERACODE_API_KEY_ID: '${{ secrets.VERACODE_API_ID }}'
           VERACODE_API_KEY_SECRET: '${{ secrets.VERACODE_API_KEY }}'
