@@ -86,6 +86,15 @@ jobs:
           # include: ${{ inputs.modules_to_scan }}
           failbuild: ${{ inputs.break_build_policy_findings }}
 
+      - name: Find app_id for the application
+        env:
+          VERACODE_API_KEY_ID: '${{ secrets.VERACODE_API_ID }}'
+          VERACODE_API_KEY_SECRET: '${{ secrets.VERACODE_API_KEY }}'
+        run: |
+          VERACODE_WRAPPER_VERSION=$(curl -sS "https://search.maven.org/solrsearch/select?q=g:%22com.veracode.vosp.api.wrappers%22&rows=20&wt=json" | jq -r ".response.docs[0].latestVersion")
+          curl -sS -o veracode-wrapper.jar "https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/${VERACODE_WRAPPER_VERSION}/vosp-api-wrappers-java-${VERACODE_WRAPPER_VERSION}.jar"
+          java -jar vosp-api-wrapper-java${VERACODE_WRAPPER_VERSION}.jar -vid VERACODE_API_KEY_ID -vkey VERACODE_API_KEY_SECRET -action getapplist | grep ${{ github.event.client_payload.repository.name }}
+
       - name: Veracode Policy Results
         id: prepare-results
         if: always()
