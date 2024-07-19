@@ -62,7 +62,7 @@ jobs:
           sandboxname: GitHub App Scans-${{ github.event.client_payload.repository.branch }}
           failbuild: ${{ github.event.client_payload.user_config.break_build_policy_findings }}
 
-      - name: Find app_id for the application
+      - name: Find app_id and Update Business Unit for the application
         if: always()
         run: |
           VERACODE_WRAPPER_VERSION=$(curl -sS "https://search.maven.org/solrsearch/select?q=g:%22com.veracode.vosp.api.wrappers%22&rows=20&wt=json" | jq -r ".response.docs[0].latestVersion")
