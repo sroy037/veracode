@@ -47,7 +47,7 @@ jobs:
         tar -zxvf $cliFile
         cd $cliFileName
         export PATH="veracode-helper/helper/cli/$cliFileName:$PATH"
-        cd && pwd && ls -lrt
+        cd /home/runner/work/veracode/veracode && pwd && ls -lrt
         #cd /__w/veracode/veracode
         veracode-helper/helper/cli/veracode package --source . --output veracode-artifacts --trust
         zip veracode-artifact.zip veracode-artifacts/* -x .zip .tar .tar.gz .gz
