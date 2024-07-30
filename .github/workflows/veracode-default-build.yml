@@ -26,9 +26,9 @@ jobs:
         ref: ${{ inputs.ref }}
         token: ${{ inputs.token }}
 
-#    - uses: actions/checkout@v4
-#      with:
-#        path: 'veracode-helper'
+    - uses: actions/checkout@v4
+      with:
+        path: 'veracode-helper'
 
     - uses: actions/checkout@v4
       with:
