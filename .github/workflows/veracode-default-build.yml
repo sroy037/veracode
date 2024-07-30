@@ -30,11 +30,11 @@ jobs:
 
     - uses: actions/checkout@v4
       with:
-        path: 'veracode/veracode-helper'
+        path: 'veracode-helper'
 
     - uses: actions/checkout@v4
       with:
-        path: 'sroy037/veracode'
+        path: 'veracode'
         
     - name: Package the application
       id: application_package
