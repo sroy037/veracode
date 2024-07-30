@@ -13,7 +13,7 @@ on:
         type: string
 jobs:
   build:
-    runs-on: soumikroy-mac
+    runs-on: self-hosted
 #    container:
 #      image: veracode/scm-packaging:latest
     env:
