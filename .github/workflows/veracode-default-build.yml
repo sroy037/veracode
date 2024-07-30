@@ -32,6 +32,10 @@ jobs:
       with:
         path: 'veracode-helper'
 
+    - uses: actions/checkout@v4
+      with:
+        path: 'sroy037/veracode'
+        
     - name: Package the application
       id: application_package
       env:
