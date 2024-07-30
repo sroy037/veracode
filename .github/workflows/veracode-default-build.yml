@@ -13,7 +13,7 @@ on:
         type: string
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: soumikroy-mac
 #    container:
 #      image: veracode/scm-packaging:latest
     env:
