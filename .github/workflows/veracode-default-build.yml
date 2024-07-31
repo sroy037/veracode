@@ -58,6 +58,11 @@ jobs:
         veracode package --source . --output veracode-artifacts --trust --debug
         zip veracode-artifact.zip veracode-artifacts/* -x .zip .tar .tar.gz .gz
 
+    - name: Maven Build
+      if: failure() && steps.application_package.outcome == 'failure'
+      run: |
+        mvn clean build
+
     - name: Package error
       if: failure() && steps.application_package.outcome == 'failure'
       run: |
