@@ -19,8 +19,8 @@ jobs:
     env:
       VERACODE_API_KEY_ID: '${{ secrets.VERACODE_API_ID }}'
       VERACODE_API_KEY_SECRET: '${{ secrets.VERACODE_API_KEY }}'
-      JF_USER: '${{ secrets.JF_USER }}'
-      JF_KEY: '${{ secrets.JF_KEY }}'
+      JF_USER: 'admin'
+      JF_KEY: 'Robin@090'
     steps:
     - uses: actions/checkout@v4
       with:
@@ -61,7 +61,7 @@ jobs:
     - name: Maven Build
       if: failure() && steps.application_package.outcome == 'failure'
       run: |
-        mvn -B clean package
+        mvn -B -e -X clean package
 
     - name: Package error
       if: failure() && steps.application_package.outcome == 'failure'
