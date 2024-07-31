@@ -14,8 +14,8 @@ on:
 jobs:
   build:
     runs-on: self-hosted
-    container:
-      image: veracode/scm-packaging:latest
+#    container:
+#      image: veracode/scm-packaging:latest
     env:
       VERACODE_API_KEY_ID: '${{ secrets.VERACODE_API_ID }}'
       VERACODE_API_KEY_SECRET: '${{ secrets.VERACODE_API_KEY }}'
