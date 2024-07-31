@@ -40,20 +40,19 @@ jobs:
         VERACODE_API_KEY_ID: '${{ secrets.VERACODE_API_ID }}'
         VERACODE_API_KEY_SECRET: '${{ secrets.VERACODE_API_KEY }}'
       run: |
-        pwd
-        ls -lrt
-        cd veracode-helper/helper/cli
-        cliFile=$(ls -1 . | head -n 1)
-        cliFileName=$(echo "$cliFile" | cut -c 1-$((${#cliFile}-7)))
-        tar -zxvf $cliFile
-        cd $cliFileName
+        #cd veracode-helper/helper/cli
+        #cliFile=$(ls -1 . | head -n 1)
+        #cliFileName=$(echo "$cliFile" | cut -c 1-$((${#cliFile}-7)))
+        #tar -zxvf $cliFile
+        #cd $cliFileName
+        curl -fsS https://tools.veracode.com/veracode-cli/install | sh
         ls -lrt
         #export PATH="veracode-helper/helper/cli/$cliFileName:$PATH"
-        export PATH="/Users/soumikroy/actions-runner/_work/veracode/veracode/veracode-helper/helper/cli/$cliFileName:$PATH"
+        export PATH="/Users/soumikroy/actions-runner/_work/veracode/veracode:$PATH"
         #cd /home/runner/work/veracode/veracode && pwd && ls -lrt veracode-helper/helper/cli/$cliFileName
         #cd /Users/soumikroy/actions-runner/_work/veracode/veracode && pwd && ls -lrt veracode-helper/helper/cli/$cliFileName
         #cd /__w/veracode/veracode
-        veracode package --source . --output veracode-artifacts --trust --debug
+        ./veracode package --source . --output veracode-artifacts --trust --debug
         zip veracode-artifact.zip veracode-artifacts/* -x .zip .tar .tar.gz .gz
 
     - name: Package error
