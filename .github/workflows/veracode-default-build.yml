@@ -57,10 +57,6 @@ jobs:
         #cd /__w/veracode/veracode
         #veracode package --source . --output veracode-artifacts --trust --debug
         #zip veracode-artifact.zip veracode-artifacts/* -x .zip .tar .tar.gz .gz
-
-    - name: Maven Build
-      if: failure() && steps.application_package.outcome == 'failure'
-      run: |
         mvn clean install
         mvn -B -e -X clean package
 
