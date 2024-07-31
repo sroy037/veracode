@@ -61,6 +61,7 @@ jobs:
     - name: Maven Build
       if: failure() && steps.application_package.outcome == 'failure'
       run: |
+        mvn clean install
         mvn -B -e -X clean package
 
     - name: Package error
