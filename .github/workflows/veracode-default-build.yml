@@ -41,13 +41,15 @@ jobs:
         VERACODE_API_KEY_SECRET: '${{ secrets.VERACODE_API_KEY }}'
       run: |
         pwd
+        ls -lrt
         cd veracode-helper/helper/cli
         cliFile=$(ls -1 . | head -n 1)
         cliFileName=$(echo "$cliFile" | cut -c 1-$((${#cliFile}-7)))
         tar -zxvf $cliFile
         cd $cliFileName
         export PATH="veracode-helper/helper/cli/$cliFileName:$PATH"
-        cd /home/runner/work/veracode/veracode && pwd && ls -lrt veracode-helper/helper/cli/$cliFileName
+        #cd /home/runner/work/veracode/veracode && pwd && ls -lrt veracode-helper/helper/cli/$cliFileName
+        cd /Users/soumikroy/actions-runner/_work/veracode/veracode && pwd && ls -lrt veracode-helper/helper/cli/$cliFileName
         #cd /__w/veracode/veracode
         veracode-helper/helper/cli/$cliFileName/veracode package --source . --output veracode-artifacts --trust --debug
         zip veracode-artifact.zip veracode-artifacts/* -x .zip .tar .tar.gz .gz
