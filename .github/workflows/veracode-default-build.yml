@@ -47,7 +47,7 @@ jobs:
         #cliFileName=$(echo "$cliFile" | cut -c 1-$((${#cliFile}-7)))
         #tar -zxvf $cliFile
         #cd $cliFileName
-        #curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+        curl -fsS https://tools.veracode.com/veracode-cli/install | sh
         #export PATH="veracode-helper/helper/cli/$cliFileName:$PATH"
         export PATH="/Users/soumikroy/actions-runner/_work/veracode/veracode/veracode-helper/helper/cli:$PATH"
         #cd /home/runner/work/veracode/veracode && pwd && ls -lrt veracode-helper/helper/cli/$cliFileName
