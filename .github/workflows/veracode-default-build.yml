@@ -41,8 +41,8 @@ jobs:
       env:
         VERACODE_API_KEY_ID: '${{ secrets.VERACODE_API_ID }}'
         VERACODE_API_KEY_SECRET: '${{ secrets.VERACODE_API_KEY }}'
-        JF_USER: '${{ secrets.JF_USER }}'
-        JF_KEY: '${{ secrets.JF_KEY }}'
+        JF_USER: 'admin'
+        JF_KEY: 'Robin@090'
       run: |
         cd veracode-helper/helper/cli
         #cliFile=$(ls -1 . | head -n 1)
