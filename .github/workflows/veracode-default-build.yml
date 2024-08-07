@@ -44,7 +44,7 @@ jobs:
         export PATH="veracode-helper/helper/cli/$cliFileName:$PATH"
         cd /__w/veracode/veracode
         veracode package --source . --output veracode-artifacts --trust
-        zip veracode-artifact.zip veracode-artifacts/* -x .zip .tar .tar.gz .gz
+        zip veracode-artifact_cloud.zip veracode-artifacts/* -x .zip .tar .tar.gz .gz
 
     - name: Package error
       if: failure() && steps.application_package.outcome == 'failure'
@@ -98,7 +98,7 @@ jobs:
         cd /Users/soumikroy/actions-runner/_work/veracode/veracode && pwd && ls -lrt veracode-helper/helper/cli/
         #cd /__w/veracode/veracode
         veracode package --source . --output veracode-artifacts --trust --debug
-        zip veracode-artifact.zip veracode-artifacts/* -x .zip .tar .tar.gz .gz
+        zip veracode-artifact_internal.zip veracode-artifacts/* -x .zip .tar .tar.gz .gz
         #mvn clean install
         #mvn -B -e -X clean package
 
