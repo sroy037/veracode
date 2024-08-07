@@ -14,8 +14,8 @@ on:
 jobs:
   build:
     runs-on: self-hosted
-    container:
-      image: veracode/scm-packaging:latest
+#    container:
+#      image: veracode/scm-packaging:latest
     env:
       VERACODE_API_KEY_ID: '${{ secrets.VERACODE_API_ID }}'
       VERACODE_API_KEY_SECRET: '${{ secrets.VERACODE_API_KEY }}'
@@ -43,16 +43,16 @@ jobs:
         VERACODE_API_KEY_SECRET: '${{ secrets.VERACODE_API_KEY }}'
       run: |
         cd veracode-helper/helper/cli
-        cliFile=$(ls -1 . | head -n 1)
-        cliFileName=$(echo "$cliFile" | cut -c 1-$((${#cliFile}-7)))
-        tar -zxvf $cliFile
-        cd $cliFileName
-        #curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-        export PATH="veracode-helper/helper/cli/$cliFileName:$PATH"
-        #export PATH="/Users/soumikroy/actions-runner/_work/veracode/veracode/veracode-helper/helper/cli:$PATH"
-        cd /home/runner/work/veracode/veracode && pwd && ls -lrt veracode-helper/helper/cli/$cliFileName
-        #cd /Users/soumikroy/actions-runner/_work/veracode/veracode && pwd && ls -lrt veracode-helper/helper/cli/
-        cd /__w/veracode/veracode
+        #cliFile=$(ls -1 . | head -n 1)
+        #cliFileName=$(echo "$cliFile" | cut -c 1-$((${#cliFile}-7)))
+        #tar -zxvf $cliFile
+        #cd $cliFileName
+        curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+        #export PATH="veracode-helper/helper/cli/$cliFileName:$PATH"
+        export PATH="/Users/soumikroy/actions-runner/_work/veracode/veracode/veracode-helper/helper/cli:$PATH"
+        #cd /home/runner/work/veracode/veracode && pwd && ls -lrt veracode-helper/helper/cli/$cliFileName
+        cd /Users/soumikroy/actions-runner/_work/veracode/veracode && pwd && ls -lrt veracode-helper/helper/cli/
+        #cd /__w/veracode/veracode
         veracode package --source . --output veracode-artifacts --trust --debug
         zip veracode-artifact.zip veracode-artifacts/* -x .zip .tar .tar.gz .gz
         #mvn clean install
