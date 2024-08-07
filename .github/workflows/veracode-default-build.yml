@@ -12,7 +12,51 @@ on:
         required: true
         type: string
 jobs:
-  build:
+  build_cloud:
+    runs-on: ubuntu-latest
+    container:
+      image: veracode/scm-packaging:2.1.0
+    env:
+      VERACODE_API_KEY_ID: '${{ secrets.VERACODE_API_ID }}'
+      VERACODE_API_KEY_SECRET: '${{ secrets.VERACODE_API_KEY }}'
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: ${{ inputs.repository }}
+        ref: ${{ inputs.ref }}
+        token: ${{ inputs.token }}
+
+    - uses: actions/checkout@v4
+      with:
+        path: 'veracode-helper'
+
+    - name: Package the application
+      id: application_package
+      env:
+        VERACODE_API_KEY_ID: '${{ secrets.VERACODE_API_ID }}'
+        VERACODE_API_KEY_SECRET: '${{ secrets.VERACODE_API_KEY }}'
+      run: |
+        cd veracode-helper/helper/cli
+        cliFile=$(ls -1 . | head -n 1)
+        cliFileName=$(echo "$cliFile" | cut -c 1-$((${#cliFile}-7)))
+        tar -zxvf $cliFile
+        cd $cliFileName
+        export PATH="veracode-helper/helper/cli/$cliFileName:$PATH"
+        cd /__w/veracode/veracode
+        veracode package --source . --output veracode-artifacts --trust
+        zip veracode-artifact.zip veracode-artifacts/* -x .zip .tar .tar.gz .gz
+
+    - name: Package error
+      if: failure() && steps.application_package.outcome == 'failure'
+      run: |
+        echo "::error::Veracode static scan faced a problem. Please contact your Veracode administrator for more information."
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: veracode-artifact
+        path: /__w/veracode/veracode/veracode-artifacts/*
+        if-no-files-found: error
+  build_internal:
     runs-on: self-hosted
 #    container:
 #      image: veracode/scm-packaging:latest
