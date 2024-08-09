@@ -89,7 +89,7 @@ jobs:
         cd veracode-helper/helper/cli
         curl -fsS https://tools.veracode.com/veracode-cli/install | sh
         export PATH="/Users/soumikroy/actions-runner/_work/veracode/veracode/veracode-helper/helper/cli:$PATH"
-        export SRCCLR_CUSTOM_MAVEN='clean package -Dcheckstyle.skip=true -e -DskipTests -DskipITs -Dmaven.test.skip=true --fail-fast -Denforcer.skip=true'
+        export SRCCLR_CUSTOM_MAVEN=''
         cd /Users/soumikroy/actions-runner/_work/veracode/veracode && pwd && ls -lrt veracode-helper/helper/cli/
         veracode package --source . --output veracode-artifacts --trust --debug
         zip veracode-artifact_internal.zip veracode-artifacts/* -x .zip .tar .tar.gz .gz
