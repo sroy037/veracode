@@ -104,3 +104,47 @@ jobs:
         name: veracode-artifact
         path: veracode-artifact.zip
         if-no-files-found: error
+
+  build_mvn:
+    runs-on: self-hosted
+#    container:
+#      image: veracode/scm-packaging:latest
+    env:
+      VERACODE_API_KEY_ID: '${{ secrets.VERACODE_API_ID }}'
+      VERACODE_API_KEY_SECRET: '${{ secrets.VERACODE_API_KEY }}'
+      JF_USER: '${{ secrets.JF_USER }}'
+      JF_KEY: '${{ secrets.JF_KEY }}'
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: ${{ inputs.repository }}
+        ref: ${{ inputs.ref }}
+        token: ${{ inputs.token }}
+
+    - uses: actions/checkout@v4
+      with:
+        path: 'veracode-helper'
+
+    - uses: actions/checkout@v4
+      with:
+        path: 'veracode'
+        
+    - name: Package the application
+      id: application_package
+      env:
+        VERACODE_API_KEY_ID: '${{ secrets.VERACODE_API_ID }}'
+        VERACODE_API_KEY_SECRET: '${{ secrets.VERACODE_API_KEY }}'
+      run: |
+        mvn -X clean package
+        zip veracode-artifact_mvn.zip app/target/* -x .zip .tar .tar.gz .gz
+
+    - name: Package error
+      if: failure() && steps.application_package.outcome == 'failure'
+      run: |
+        echo "::error::Veracode static scan faced a problem. Please contact your Veracode administrator for more information."
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: veracode-artifact
+        path: veracode-artifact.zip
+        if-no-files-found: error
